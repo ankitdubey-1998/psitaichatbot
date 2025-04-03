@@ -5,15 +5,15 @@ const sendMessageButton = document.querySelector("#send-message");
 const API_URL = ``;
 
 const userData = {
-    message: null
+  message: null
 }
 
 //Create message element with dynamic classes and return it
-const createMessageElement = (content,...classes) => {
-const div = document.createElement("div");
-div.classList.add("message",...classes);
-div.innerHTML = content;
-return div;
+const createMessageElement = (content, ...classes) => {
+  const div = document.createElement("div");
+  div.classList.add("message", ...classes);
+  div.innerHTML = content;
+  return div;
 }
 
 const generateBotResponse = () => {
@@ -23,22 +23,22 @@ const generateBotResponse = () => {
 
 //Handle outgoing user messages 
 const handleOutgoingMessage = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    userData.message = messageInput.value.trim();
-    messageInput.value = "";
+  userData.message = messageInput.value.trim();
+  messageInput.value = "";
 
-    //Create and display user message 
-const messageContent =  `<div class="message-text">
+  //Create and display user message 
+  const messageContent = `<div class="message-text">
 </div>`;
 
-const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
-outgoingMessageDiv.querySelector(".message-text").textContent = userData.message;
-chatBody.appendChild(outgoingMessageDiv);
+  const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
+  outgoingMessageDiv.querySelector(".message-text").textContent = userData.message;
+  chatBody.appendChild(outgoingMessageDiv);
 
-//Simulate bot response with thinking indicator after a delay
-setTimeout(() => {
-    const messageContent =  `<svg
+  //Simulate bot response with thinking indicator after a delay
+  setTimeout(() => {
+    const messageContent = `<svg
             class="bot-avatar"
             xmlns="http://www.w3.org/2000/svg"
             width="50"
@@ -57,21 +57,21 @@ setTimeout(() => {
             </div>
           </div>`;
 
-const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
-chatBody.appendChild(incomingMessageDiv);
-generateBotResponse();
-}, 600);
+    const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
+    chatBody.appendChild(incomingMessageDiv);
+    generateBotResponse();
+  }, 600);
 }
 
 
 //Handle Enter key press for sending messages
-messageInput.addEventListener("keydown",(e)=>{
-    const userMessage = e.target.value.trim();
-    if(e.key === "Enter" && userMessage){
-        e.preventDefault();
-        handleOutgoingMessage(e);
-        messageInput.value = "";
-    }
+messageInput.addEventListener("keydown", (e) => {
+  const userMessage = e.target.value.trim();
+  if (e.key === "Enter" && userMessage) {
+    e.preventDefault();
+    handleOutgoingMessage(e);
+    messageInput.value = "";
+  }
 })
 
-sendMessageButton.addEventListener("click",(e)=> handleOutgoingMessage(e));
+sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
